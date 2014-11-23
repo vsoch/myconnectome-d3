@@ -121,12 +121,21 @@
 
 <!--Controls, saving, etc-->
 <div id="controlBox">
-  <div class="checkbox">
-    <input type="checkbox" class="btn btn-success" id="highlight_positive">Highlight +</input><br>
-    <input type="checkbox" class="btn btn-success" id="highlight_negative">Highlight -</input>
-  </div>  
-   <button class="btn btn-success" id="save_as_svg" value="" onclick="saveFunction()">Save as SVG</button>  
+
+
+
+<form role="form">
+  <div class="form-group">
+     <input type="checkbox" class="btn btn-success" id="highlight_positive"> Highlight Positive<br>
+  </div>
+  <div class="form-group">
+    <input type="checkbox" class="btn btn-success" id="highlight_negative"> Highlight Negative<br>     
+  </div>
+  <button class="btn btn-success" id="save_as_svg" value="" onclick="saveFunction()">Save as SVG</button>
+</form>
+
 </div>
+
 <!--Here is image box-->
 <div id="imageBox">
   <img src="img/dummy.png" width="100px" />

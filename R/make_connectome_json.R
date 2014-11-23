@@ -106,18 +106,31 @@ for (dd in 1:length(ordering_index)){
   cat("Processing row",dd,"of",nrow(thresholded),"\n")
   # First let's find its connections
   connection_idx = which(thresholded[d,]!=0)
-  # Here are the labels of the connections
-  connection_names = colnames(thresholded)[connection_idx]
-  connection_groups = groups[connection_idx]
-  connection_labels = paste(connection_groups, connection_names,sep=".")
-  # Here are the strengths of the connections
-  connection_values = round(as.numeric(thresholded[d,connection_idx]),3)
-  connection_value_string = paste(connection_values,collapse="|")
-  if (dd!=length(ordering_index)){
-    cat(file=output_file,'{"name":"',groups[d],'.',meta$label[d],'","strength":"',connection_value_string,'","x":',meta$x[d],',"y":',meta$y[d],',"z":',meta$z[d],',"image":"',meta$image[d],'","order":',meta$order[d],',"color":"',color_vector[d],'","network":"',paste(meta$hemisphere[d],meta$network[d]),'","connections":["',paste(connection_labels,collapse='","'),'"]},\n',sep="",append=TRUE)
-  }
-  else {
-    cat(file=output_file,'{"name":"',groups[d],'.',meta$label[d],'","strength":"',connection_value_string,'","x":',meta$x[d],',"y":',meta$y[d],',"z":',meta$z[d],',"image":"',meta$image[d],'","order":',meta$order[d],',"color":"',color_vector[d],'","network":"',paste(meta$hemisphered[d],meta$network[d]),'","connections":["',paste(connection_labels,collapse='","'),'"]}]',sep="",append=TRUE)
+  
+  # If we have connections- then we print them to the json
+  if (length(connection_idx)>0){
+    # Here are the labels of the connections
+    connection_names = colnames(thresholded)[connection_idx]
+    connection_groups = groups[connection_idx]
+    connection_labels = paste(connection_groups, connection_names,sep=".")
+    # Here are the strengths of the connections
+    connection_values = round(as.numeric(thresholded[d,connection_idx]),3)
+    connection_value_string = paste(connection_values,collapse="|")
+    if (dd!=length(ordering_index)){
+      cat(file=output_file,'{"name":"',groups[d],'.',meta$label[d],'","strength":"',connection_value_string,'","x":',meta$x[d],',"y":',meta$y[d],',"z":',meta$z[d],',"image":"',meta$image[d],'","order":',meta$order[d],',"color":"',color_vector[d],'","network":"',paste(meta$hemisphere[d],meta$network[d]),'","connections":["',paste(connection_labels,collapse='","'),'"]},\n',sep="",append=TRUE)
+    }
+    else {
+      cat(file=output_file,'{"name":"',groups[d],'.',meta$label[d],'","strength":"',connection_value_string,'","x":',meta$x[d],',"y":',meta$y[d],',"z":',meta$z[d],',"image":"',meta$image[d],'","order":',meta$order[d],',"color":"',color_vector[d],'","network":"',paste(meta$hemisphered[d],meta$network[d]),'","connections":["',paste(connection_labels,collapse='","'),'"]}]',sep="",append=TRUE)
+    }
+
+  # Otherwise we do not
+  } else {
+    if (dd!=length(ordering_index)){
+      cat(file=output_file,'{"name":"',groups[d],'.',meta$label[d],'","x":',meta$x[d],',"y":',meta$y[d],',"z":',meta$z[d],',"image":"',meta$image[d],'","order":',meta$order[d],',"color":"',color_vector[d],'","network":"',paste(meta$hemisphere[d],meta$network[d]),'"},\n',sep="",append=TRUE)
+    }
+    else {
+      cat(file=output_file,'{"name":"',groups[d],'.',meta$label[d],'","x":',meta$x[d],',"y":',meta$y[d],',"z":',meta$z[d],',"image":"',meta$image[d],'","order":',meta$order[d],',"color":"',color_vector[d],'","network":"',paste(meta$hemisphere[d],meta$network[d]),'"}]\n',sep="",append=TRUE)
+    }
   }
 }
 }
