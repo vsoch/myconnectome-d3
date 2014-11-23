@@ -54,8 +54,22 @@ svg.append("svg:path")
     .attr("d", d3.svg.arc().outerRadius(ry - 120).innerRadius(0).startAngle(0).endAngle(2 * Math.PI))
     .on("mousedown", mousedown);
 
-// TODO: This path is currently hardcoded, but in future will be done via php
-d3.json("data/afterscan.anxietyduringscan.json", function(classes) {
+// Here is a funcion to get variables from the URL - the code script name
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+//Get json name from the browser url
+var json_data = getUrlVars()
+
+if (typeof json_data["data"] == 'undefined'){ json_data = "mean_corrdata";}
+else { json_data = json_data["data"].replace("/",""); }
+
+d3.json("data/" + json_data + ".json", function(classes) {
   var nodes = cluster.nodes(packages.root(classes)),
       // Links will have source, target, and value (strength) of correlation
       links = packages.connections(nodes),

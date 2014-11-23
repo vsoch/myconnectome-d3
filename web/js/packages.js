@@ -13,6 +13,8 @@
             node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
             node.parent.children.push(node);
             node.key = name.substring(i + 1);
+            // we need to make new x and y variables for the mni coordinates,
+            // because node.x and node.y get overwritten with the x,y svg coordinates
             node.xcoord = node.x;
             node.ycoord = node.y;
           }

@@ -30,6 +30,92 @@
       </button>
       <a class="navbar-brand" href="#">My Connectome</a>
     </div>
+
+ <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+          <!--Summary-->
+        <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Summary <span class="caret"></span></a>
+           <ul class="dropdown-menu" role="menu">
+            <li><a href="?data=mean_corrdata">Mean</a></li>
+            <li><a href="?data=var_corrdata">Variance</a></li>
+          </ul>
+        </li>
+
+          <!--Health-->
+         <li class="dropdown">	 
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Health<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="?data=temp.mean">Temperature</a></li>
+            <li><a href="?data=zeo.zq">Sleep (zeo)</a></li>
+          </ul>
+        </li>
+
+       <!--DAYS-->
+         <li class="dropdown">	 
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Days <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="?data=tuesday_var">Tuesday</a></li>
+            <li><a href="?data=thursday_var">Thursday</a></li>
+            <!--<li><a href="?data=tu_thu">Tuesday+Thursday</a></li>-->
+          </ul>
+        </li>
+
+
+         <!--Previous evening-->
+         <li class="dropdown">	 
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Previous Evening<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="?data=prevevening.alcohol">Alcohol</a></li>
+            <li><a href="?data=prevevening.guthealth">Gut Health</a></li>
+            <li><a href="?data=prevevening.psoriasisseverity">Psoriasis</a></li>
+            <li><a href="?data=prevevening.timespentoutdoors">Time Spent Outdoors</a></li>
+            <li><a href="?data=prevevening.stress">Stress</a></li>
+          </ul>
+        </li>
+
+          <!--MORNING-->
+         <li class="dropdown">	 
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Morning<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="?data=morning.sleepquality">Sleep Quality</a></li>
+            <li><a href="?data=morning.soreness">Soreness</a></li>
+          </ul>
+        </li>
+
+          <!--AFTERSCAN-->
+         <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">After Scan <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="?data=afterscan.anxietyduringscan">Anxiety During Scan</a></li>
+            <li><a href="?data=afterscan.diastolic">Diastolic</a></li>
+            <li><a href="?data=afterscan.pulse">Pulse</a></li>
+            <li><a href="?data=afterscan.systolic">Systolic</a></li>
+          </ul>
+        </li>
+
+          <!--EMAIL-->
+        <li class="dropdown">	
+         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Email<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="?data=email.liwc_cdi">Email 1</a></li>
+            <li><a href="?data=email.liwc_negemo">Email Negative</a></li>
+          </ul>
+        </li>
+
+           <!--PANAS-->
+         <li class="dropdown">	 
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">PANAS<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="?data=panas.fatigue">Fatigue</a></li>
+            <li><a href="?data=panas.negative">Negative</a></li>
+            <li><a href="?data=panas.positive">Positive</a></li>
+          </ul>
+        </li>
+
+
   </div><!-- /.container-fluid -->
 </nav>
 
