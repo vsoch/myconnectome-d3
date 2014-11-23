@@ -161,8 +161,8 @@ d3.json("data/afterscan.anxietyduringscan.json", function(classes) {
           .attr("src", "img/" + node.image)
 
           // Add the xyz coordinates
-          d3.select("#x").text(node.x.toFixed(2))
-          d3.select("#y").text(node.y.toFixed(2))
+          d3.select("#x").text(node.xcoord.toFixed(2))
+          d3.select("#y").text(node.ycoord.toFixed(2))
           d3.select("#z").text(node.z.toFixed(2))
       })
       // Show title of network when mouse over node
