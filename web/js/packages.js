@@ -50,8 +50,14 @@
         // Now the strengths variable holds the connection strength to connections at same index i
         if (d.connections) d.connections.forEach(function(i) {
           // i is the connection node name, and d.name is the current node name 
+        if (strengths) {  
           connections.push({source: map[d.name], value: strengths.shift() ,target: map[i]});
-        });
+        } 
+        else {
+        connections.push({source: map[d.name], value: 0 ,target: map[i]});
+        }      
+
+         });
       });
 
       return connections;

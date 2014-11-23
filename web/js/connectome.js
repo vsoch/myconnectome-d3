@@ -55,7 +55,7 @@ svg.append("svg:path")
     .on("mousedown", mousedown);
 
 // TODO: This path is currently hardcoded, but in future will be done via php
-d3.json("data/myconnectome.json", function(classes) {
+d3.json("data/afterscan.anxietyduringscan.json", function(classes) {
   var nodes = cluster.nodes(packages.root(classes)),
       // Links will have source, target, and value (strength) of correlation
       links = packages.connections(nodes),
@@ -161,9 +161,9 @@ d3.json("data/myconnectome.json", function(classes) {
           .attr("src", "img/" + node.image)
 
           // Add the xyz coordinates
-          d3.select("#x").text(1)
-          d3.select("#y").text(2)
-          d3.select("#z").text(3)
+          d3.select("#x").text(node.x.toFixed(2))
+          d3.select("#y").text(node.y.toFixed(2))
+          d3.select("#z").text(node.z.toFixed(2))
       })
       // Show title of network when mouse over node
       .on("mouseover.title",function(d) { 
