@@ -96,22 +96,39 @@ d3.json("data/" + json_data + ".json", function(classes) {
 
   //TODO: need to get the donut drawn!
   // Let's draw the donut!
+  var piediv = d3.select("body").insert("div")
+    .attr("id","donut")
+    .style("top", "80px")
+    .style("left", "80px")
+    .style("width", "1300px")
+    .style("height", "1300px")
+    .style("position", "absolute")
+    .style("z-index",100)
+    .style("-webkit-backface-visibility", "hidden");
+
   var arc = d3.svg.arc()
     .outerRadius(1500)
     .innerRadius(1300);
 
   var pie = d3.layout.pie()
     .sort(null)
+
+
+var piesvg = div.append("svg:svg")
+    .attr("width", w)
+    .attr("height", w)
+    .attr("xmlns","http://www.w3.org/2000/svg")
+    .attr("version",1.1)
     
-  svgarc = svg.append("g")
-    //.attr("transform", "translate(740,740)");
+  svgarc = piesvg.append("g")
+    .attr("transform", "translate(740,740)");
   
-  var g = svgarc.selectAll(".arc")
+  var pieg = svgarc.selectAll(".arc")
       .data(pie(donutvalues))
       .enter().append("g")
       .attr("class", "arc");
       
-      g.append("path")
+      pieg.append("path")
        .attr("d", arc)
        .attr("fill",function(d,i) {return donutcolors[i];})
         //.on("mouseover.path",function(d) { 
@@ -140,7 +157,7 @@ d3.json("data/" + json_data + ".json", function(classes) {
           // Here we add a variable, "value" to class of node to distinguish if its positive or negative
           var direction;
           if (d.value > 0) {return "#7AA6FE";}
-          else {return "#FF9C39";}
+          else {return "red";}
         })
         
 

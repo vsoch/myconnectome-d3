@@ -38,12 +38,37 @@ meta$image = image
 
 # We are going to keep top .95 of positive and negative correlations for each row (this is what was done in original d3)
 cat("Calculating node thresholds for values <> +/-",thresh,"\n")
-for (d in 1:nrow(data)){
-  cat("Processing row",d,"\n")
-  row = data[d,]
-  node_threshold = max(abs(row)) * thresh
-  thresholded[d,which(abs(row) < node_threshold)] = 0
-}
+
+# NEW ALGORITHM
+# If the user specifies "99%" as threshold this means we will only include top 1% of negative and positive values
+
+# Let's split into positive and negative
+# I'm going to just do abs(neg) to get threshold, then negate it
+pos = as.matrix(data)
+neg = as.matrix(data)
+pos[data < 0] = 0
+neg[data > 0] = 0
+
+# Try getting quantiles for top and bottom
+qpos = quantile(pos,thresh)
+qneg = quantile(abs(neg),thresh)
+
+# From Russ: If there are very few nonzero connections (such as for afterscan.Anxiety) if the threshold is relatively loose (like 5%), which implies somethign like 10K connections, then there will be many fewer actual connections in the adjacency matrix than it would take to achieve that density. In that case I think the quantille function will just return zero, so that you can just threshold by the value returned by quantile and you should be fine. let me know if that makes sense.
+
+pos[pos < qpos] = 0
+neg[neg > (-1*qneg)] = 0
+
+thresholded = pos + neg
+
+# Take look at hist(thresholded) to confirm we still have pos and neg!
+
+# OLD ALGORITHM
+#for (d in 1:nrow(data)){
+#  cat("Processing row",d,"\n")
+#  row = data[d,]
+#  node_threshold = max(abs(row)) * thresh
+#  thresholded[d,which(abs(row) < node_threshold)] = 0
+#}
 
 # If you need to reshuffle your nodes based on some other order variable,
 # here is how to do it:

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<title>MyConnectome</title>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+
+
+<style media="screen" type="text/css">
+    
+   body { 
+      position: relative;
+      background: url(img/bg.jpg) no-repeat center center fixed; 
+       -webkit-background-size: cover;
+       -moz-background-size: cover;
+       -o-background-size: cover;
+       background-size: cover;    
+    }
+   #myconnectome {
+      font-size: 100;
+      color: #cccccc;
+   }
+
+    #title {
+       left: 180px;
+       top: 75px;
+       padding-top:100px;
+       position: absolute;
+    }
+
+    #brain {
+       margin: auto;
+       position: absolute;
+       z-index: 5;
+       top: 0; left: 0; bottom: 0; right: 0;
+}
+</style>
+
+<body>
+
+<div id="title">
+<h1 id="myconnectome">myconnectome</h1>
+</div>
+
+<div id="brain">
+<!-- D3 will go here-->
+</div>
+
+<script>
+
+var width = 1280,
+    height = 960,
+    padding = 1.5, // separation between same-color circles
+    clusterPadding = 6, // separation between different-color circles
+    maxRadius = 8;
+
+// Function to get unique values
+var arrayUnique = function(a) {
+    return a.reduce(function(p, c) {
+        if (p.indexOf(c) < 0) p.push(c);
+        return p;
+    }, []);
+};
+
+d3.tsv("data/portal_data.tsv",function(nodes) {
+
+  // How many clusters?
+  cluster_numbers = []
+
+  nodes.forEach(function(d) {
+    d.cluster = +d.cluster;
+    d.radius = +d.radius;
+    cluster_numbers.push(d.cluster);
+  });
+
+  unique_clusters = arrayUnique(cluster_numbers);
+  m = unique_clusters.length;
+
+  // The largest node for each cluster.
+  var clusters = new Array(m);
+
+  // Find the largest one for each cluster
+  nodes.forEach(function(d) {
+    // i is the cluster number, the index into clusters
+    i = d.cluster
+    // If we haven't seen a group member yet, make him the largest
+    if (!clusters[i]) {clusters[i] = d} 
+    else {
+       // otherwise, if new radius is bigger, replace
+       if (clusters[i].radius < d.radius) { clusters[i] = d; }
+    } 
+   });
+
+var color = d3.scale.category10()
+    .domain(d3.range(m));
+
+var force = d3.layout.force()
+    .nodes(nodes)
+    .size([width, height])
+    .gravity(.02)
+    .charge(0)
+    .on("tick", tick)
+    .start();
+
+var svg = d3.select("#brain").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var circle = svg.append("g").selectAll("circle")
+    .data(nodes)
+  .enter()
+  .append("svg:a")
+    .attr("xlink:href", function(d){return "index.html?data=" + d.url;})
+  .append("circle")
+    .attr("r", function(d) { return d.radius; })
+    .style("fill", function(d) { return color(d.cluster); })
+    .style("stroke","#ffffff")
+    .style("stroke-width",5)
+    .on('mouseover.size', function(d) {
+         d3.select(this).attr("r", 75);
+     })
+    .on('mouseover.text', function(d) {
+         d3.select(this).text("HELLO");
+     })
+     .on('mouseout.size', function(d) {
+         d3.select(this).attr("r", d.radius);
+     })
+     .on("mouseover.image",function(node){
+        // Add the image
+        d3.select("#myconnectome")
+          .text(node.label)
+      })
+      
+    .call(force.drag)
+
+             
+function tick(e) {
+  circle
+      .each(cluster(10 * e.alpha * e.alpha))
+      .each(collide(.5))
+      .attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; });
+}
+
+
+
+// Move d to be adjacent to the cluster node.
+function cluster(alpha) {
+  return function(d) {
+    var cluster = clusters[d.cluster];
+    if (cluster === d) return;
+    var x = d.x - cluster.x,
+        y = d.y - cluster.y,
+        l = Math.sqrt(x * x + y * y),
+        r = d.radius + cluster.radius;
+    if (l != r) {
+      l = (l - r) / l * alpha;
+      d.x -= x *= l;
+      d.y -= y *= l;
+      cluster.x += x;
+      cluster.y += y;
+    }
+  };
+}
+
+// Resolves collisions between d and all other circles.
+function collide(alpha) {
+  var quadtree = d3.geom.quadtree(nodes);
+  return function(d) {
+    var r = d.radius + maxRadius + Math.max(padding, clusterPadding),
+        nx1 = d.x - r,
+        nx2 = d.x + r,
+        ny1 = d.y - r,
+        ny2 = d.y + r;
+    quadtree.visit(function(quad, x1, y1, x2, y2) {
+      if (quad.point && (quad.point !== d)) {
+        var x = d.x - quad.point.x,
+            y = d.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y),
+            r = d.radius + quad.point.radius + (d.cluster === quad.point.cluster ? padding : clusterPadding);
+        if (l < r) {
+          l = (l - r) / l * alpha;
+          d.x -= x *= l;
+          d.y -= y *= l;
+          quad.point.x += x;
+          quad.point.y += y;
+        }
+      }
+      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    });
+  };
+}})
+</script>
+</body>
+</html>
