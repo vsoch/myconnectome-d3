@@ -75,66 +75,6 @@ d3.json("data/" + json_data + ".json", function(classes) {
       links = packages.connections(nodes),
       splines = bundle(links);
 
-  // Here we need to count the number in each class to create the donut around
-  donutdata = packages.count(classes);
-
-  donutvalues = []
-  for(var key in donutdata.classes) {
-    donutvalues.push(donutdata.classes[key]);
-  }
-
-  donutkeys = []
-  for(var key in donutdata.classes) {
-    donutkeys.push(key);
-  }
-
-  donutcolors = []
-  for (var key in donutdata.colors) {
-    donutcolors.push(donutdata.colors[key]);
-  }
-
-
-  //TODO: need to get the donut drawn!
-  // Let's draw the donut!
-  var piediv = d3.select("body").insert("div")
-    .attr("id","donut")
-    .style("top", "80px")
-    .style("left", "80px")
-    .style("width", "1300px")
-    .style("height", "1300px")
-    .style("position", "absolute")
-    .style("z-index",100)
-    .style("-webkit-backface-visibility", "hidden");
-
-  var arc = d3.svg.arc()
-    .outerRadius(1500)
-    .innerRadius(1300);
-
-  var pie = d3.layout.pie()
-    .sort(null)
-
-
-var piesvg = div.append("svg:svg")
-    .attr("width", w)
-    .attr("height", w)
-    .attr("xmlns","http://www.w3.org/2000/svg")
-    .attr("version",1.1)
-    
-  svgarc = piesvg.append("g")
-    .attr("transform", "translate(740,740)");
-  
-  var pieg = svgarc.selectAll(".arc")
-      .data(pie(donutvalues))
-      .enter().append("g")
-      .attr("class", "arc");
-      
-      pieg.append("path")
-       .attr("d", arc)
-       .attr("fill",function(d,i) {return donutcolors[i];})
-        //.on("mouseover.path",function(d) { 
-         //  d3.select("#titleBox")
-          //   .selectAll("h3")
-          //   .text(d.network);});
          
   // This variable could determine if the current svg view should
   // be frozen, which can be done with a click
