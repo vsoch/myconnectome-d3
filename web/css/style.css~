@@ -1,0 +1,196 @@
+body {
+  background: #ffffff;
+}
+
+a:link, a:visited {
+  color: #777;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #666;
+}
+
+blockquote {
+  margin: 0;
+}
+
+blockquote:before {
+  content: "â€œ";
+  position: absolute;
+  left: -.4em;
+}
+
+blockquote:after {
+  content: "â€";
+  position: absolute;
+}
+
+
+.invert {
+  background: #1f1f1f;
+  color: #dcdccc;
+}
+
+.invert h2, .invert h3 {
+  color: #7f9f7f;
+}
+
+.string, .regexp {
+  color: #f39;
+}
+
+.keyword {
+  color: #00c;
+}
+
+.comment {
+  color: #777;
+  font-style: oblique;
+}
+
+.number {
+  color: #369;
+}
+
+.class, .special {
+  color: #1181B8;
+}
+
+
+/* Specific d3 styling */
+
+path.arc {
+  cursor: move;
+  fill: #fff;
+}
+
+.node {
+  font-size: 10px;
+}
+
+.node:hover {
+  fill: #1f77b4;
+}
+
+.link {
+  fill: none;
+  stroke: #1f77b4;
+  stroke-opacity: 0.4;
+  pointer-events: none;
+}
+
+.link.source, .link.target {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+
+.node.target {
+  /*fill: #d62728 !important;*/
+}
+
+.link.source {
+  /*stroke: #d62728;*/
+}
+
+.node.source {
+  /*fill: #2ca02c;*/
+}
+
+.link.target {
+  /*stroke: #2ca02c;*/
+}
+
+
+/* Network div position */
+#network {
+  position: fixed:
+  top: 50;
+  left: 25;
+}
+
+/* Here is the control sliders */
+.control {
+  position:absolute;
+  bottom:20;
+  font-size:18px;"
+  padding-left: 20px;
+  padding-right:30px;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  float: left;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  margin-top: 5px;
+  margin-left: 5px;
+  border-radius: 15px;
+  /*background: #cccccc;
+  filter:alpha(opacity=80);
+			opacity: 0.8;
+			-moz-opacity: 0.8;
+			-khtml-opacity:0.8;*/
+  z-index: 5;
+}
+
+/* Here is the image box in the top right*/
+#imageBox {
+  vertical-align: top;
+  width: 300px;
+  padding-left: 20px;
+  padding-right:20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  float: right;
+  position: absolute;
+  margin-top: 30px;
+  margin-left: 40px;
+  border-radius: 15px;
+  background: #cccccc;
+  filter:alpha(opacity=70);
+			opacity: 0.7;
+			-moz-opacity: 0.7;
+			-khtml-opacity:0.7;
+  z-index: 5;
+  top: 50px;
+  right: 25px;
+  
+}
+
+/* Title box with region name at top*/
+#titleBox {
+  vertical-align: top;
+  padding-left: 15px;
+  padding-right:15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: absolute;
+  margin-top: 30px;
+  margin-left: 40px;
+  border-radius: 15px;
+  color: #666666;
+  z-index: 6;
+  top: 50px;
+  right: 20%;
+  
+}
+
+/* Control box in top left*/
+#controlBox {
+  vertical-align: top;
+  width: 250px;
+  height: 200px;
+  padding-top:100px;
+  padding-left:20px;
+  float: left;
+  position: absolute;
+  margin-top: 30px;
+  margin-left: 25px;
+  border-radius: 15px;
+  z-index: 5;
+  top: 50px;
+  left: 10px;
+  
+}
+
+

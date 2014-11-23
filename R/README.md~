@@ -1,0 +1,56 @@
+This folder contains scripts to prepare connectivity matrix input files for a d3 visualization with myconnectome_d3.
+
+# Prepare Your Data
+
+1. You need to prepare the following files:
+meta.txt: should be a tab separated file of meta data with the following columns
+  - order: indexed from zero
+  - original_node_number: from a different clustering, if applicable
+  - x: the x coordinate of the roi
+  - y: the y coordinate of the roi
+  - z: the z coordinate of the roi
+  - hemisphere: specify "L" or "R"
+  - network_name:
+  - network_number:
+
+The "order" variable should correspond with the ordering of nodes in your connectivity_matrix.txt (explained below), which should also correspond with the ordering of the nodes around the circle.  If you want to have a different ordering of nodes around the circle from the order in the connectivity matrix, you should add a variable, and specify this variable as the "order" variable in the json file.  The ordering starts from the top and goes clockwise.  For example, for a lateral ordering you might consider sorting by hemisphere, then by network, then by Y location (i.e. front to back of the brain). You would then need to append the left node hemisphere nodes, reversed in order.  This will produce a lateral layout so that the order of the nodes in the files follows exactly the order around the circle.
+
+2. connectivity_matrix.txt: a space separated NxN connectivity matrix, with no column or row labels.  These rows and columns ordering should correspond to the rows in the file above.
+
+# prepMetaData.R
+This script will combine your data and meta data files into one json that will be used for the d3 - the meta data of each node is attached to the node in this file, as are the neighbors.  This script will, most importantly, calculate the neighbors based on a threshold (part A) which you should edit if you want a different thresholding.  The d3 will allow for more fine tuned tweaking of this threshold - for example, if we filter to include the 90th percentile of nodes here, the user will be able to increase to only show the 95th, but can not go in the other direction. This file will also attach a particular color to each node depending on the network.  The colors correspond to those from a network analysis done for Poldrack lab by the Peterson lab, and the values are hard coded into the script.
+
+
+
+# Edit main.js to point to your data
+
+
+### INPUT
+ - 
+The nodes are sorted by hemisphere, then by network, then by Y location (i.e. front to back of the brain). The left hemisphere nodes are reversed in order, so that the order of the nodes in the files follows exactly the order around the circle.
+
+STOPPED HERE - finish writing readme, and then new script to parse data...
+
+specifying "L" or "R" for right or left hemisphere
+  - network: should be the network names
+  - output: the name of the desired output file, will also be tab separated
+  - color: the name of the file that will specify the coloring of the network (based on network variable)
+
+
+the nodes are sorted by hemisphere, then by network, then by Y location (i.e. front to back of the brain). The left hemisphere nodes are reversed in order, so that the order of the nodes in the files follows exactly the order around the circle.
+
+
+final_groups: nodes grouped by network, regardless of left or right
+# opposite_groups: nodes grouped so left-regionX is opposite in the circle to right-regionX
+# lateral_groups: nodes grouped around circle so left-regionX is lateral to right-regionX
+#
+# INPUT
+# meta: should be a tab separated file of meta data with the following column labels:
+#   - hemis: specifying "L" or "R" for right or left hemisphere
+#   - network: should be the network names
+# output: the name of the desired output file, will also be tab separated
+# color: the name of the file that will specify the coloring of the network (based on network variable)
+#        this is just space separated
+# USAGE
+#                        meta            output             color
+# RSCRIPT prepMetaData.R parcel_data.txt metadata_final.tsv colorfile.txt

@@ -1,0 +1,18 @@
+# run_make_connections_json will iterate over Russ data directories, and make an output json for each one
+# for a d3 visualization!
+
+# ouput_folder: where you want to save the json files, should be in web/data directory of myconnectome
+# input_folder: should be the folder filled with subfolders, each containing a parcel data and meta data file
+# data file should have some common name, as well as parcel file
+
+output_folder = "/home/vanessa/Documents/Dropbox/Website/myconnectome/web/data"
+input_folder = "/home/vanessa/Documents/Dropbox/Website/myconnectome/data"
+data_file = "data_unspaced.txt"
+parcel_file = "parcel_info_unspaced.txt"
+
+subfolders = list.files(input_folder,full.names=TRUE)
+
+for (folder in subfolders) {
+  data = paste(folder,"/",data_file)
+  meta = paste(folder,"/",parcel_file)
+}
