@@ -2,10 +2,11 @@
   packages = {
 
     // Construct the package hierarchy from class names.
-    root: function(classes) {
+    // Classcounts holds the number in each class, so we know
+    // where to position the label
+    root: function(classes,centroids) {
       var map = {};
-      var currentnetwork = [];
-
+      console.log(centroids);
       function find(name, data) {
         var node = map[name], i;
         if (!node) {
@@ -18,12 +19,11 @@
             // because node.x and node.y get overwritten with the x,y svg coordinates
             node.xcoord = node.x;
             node.ycoord = node.y;
-            // We also are going to make an indicator variable if we should show the label            
-            if (currentnetwork == node.network){
-              node.makelabel = 0;
-            } else {
+            // We also are going to make an indicator variable if we should show the label  
+            if (centroids.indexOf(+node.key) > -1){
               node.makelabel = 1;
-              currentnetwork = node.network;
+            } else {
+              node.makelabel = 0;
             }
           }
         }
@@ -80,15 +80,27 @@
       
       var classes = {}; 
       var colors = {};
+      // Here we will hold node keys in center of classes
+      var centroids = [];
 
       nodes.forEach(function(d) {
         if ((d.network) in classes) 
           classes[d.network] = classes[d.network] + 1;
         else {classes[d.network] = 1; colors[d.network] = d.color;}
         });
-
-      donut = {classes:classes,colors:colors};
-      return donut;
+      
+      // Now let's save the keys of nodes in the middle indices for the classes
+      currentclass = []
+      nodes.forEach(function(d) {
+        if (currentclass != d.network){
+            centroids.push(d.order + Math.floor(classes[d.network] / 2));
+            currentclass = d.network;
+        } 
+      });
+      
+      console.log(centroids);
+      classcount = {classes:classes,colors:colors,centroids:centroids};
+      return classcount;
 
     }    
   };

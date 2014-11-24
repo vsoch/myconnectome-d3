@@ -70,7 +70,9 @@ if (typeof json_data["data"] == 'undefined'){ json_data = "mean_corrdata";}
 else { json_data = json_data["data"].replace("/",""); }
 
 d3.json("data/" + json_data + ".json", function(classes) {
-  var nodes = cluster.nodes(packages.root(classes)),
+  var classcounts = packages.count(classes);
+  
+  var nodes = cluster.nodes(packages.root(classes,classcounts.centroids)),
       // Links will have source, target, and value (strength) of correlation
       links = packages.connections(nodes),
       splines = bundle(links);
@@ -115,7 +117,10 @@ d3.json("data/" + json_data + ".json", function(classes) {
     .append("svg:text")
       .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
       .attr("dy", ".8em")
-      .attr("fill",function(d) { return d.color; })
+      .attr("fill",function(d) { 
+          if (d.network == "L Cingulo-opercular") {return "#000000";}
+          if (d.network == "R Cingulo-opercular") {return "#000000";}
+          else return d.color; })
       .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
       .text(function(d) { 
