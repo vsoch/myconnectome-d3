@@ -1,8 +1,8 @@
 // Here is the size of the canvas, and the radius for the visualization
-var w = 1600,
-    h = 1600,
-    rx = w / 2,
-    ry = h / 2,
+var w = 1700,
+    h = 1700,
+    rx = w / 2 - 120,
+    ry = h / 2 - 120,
     m0,
     rotate = 0;
 
@@ -97,8 +97,8 @@ d3.json("data/" + json_data + ".json", function(classes) {
         .style("stroke",function(d){
           // Here we add a variable, "value" to class of node to distinguish if its positive or negative
           var direction;
-          if (d.value > 0) {return "#7AA6FE";}
-          else {return "red";}
+          if (d.value > 0) {return "red";}
+          else {return "#7AA6FE";}
         })
      
 

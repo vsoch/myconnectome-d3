@@ -165,13 +165,13 @@ path.arc {
   padding-top: 5px;
   padding-bottom: 5px;
   position: absolute;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-left: 40px;
   border-radius: 15px;
   color: #666666;
   z-index: 6;
   top: 50px;
-  right: 20%;
+  right: 10%;
   
 }
 
