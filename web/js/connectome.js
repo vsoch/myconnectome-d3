@@ -1,8 +1,8 @@
 // Here is the size of the canvas, and the radius for the visualization
-var w = 1700,
-    h = 1700,
-    rx = w / 2 - 120,
-    ry = h / 2 - 120,
+var w = 1800,
+    h = 1800,
+    rx = w / 2 - 150,
+    ry = h / 2 - 150,
     m0,
     rotate = 0;
 
@@ -18,7 +18,7 @@ function comparator(a, b) {
 // if you specify groupings (Eg in name R-1.1, R-1 is a group) that break apart this ordering, it will
 // be broken.
 var cluster = d3.layout.cluster()
-    .size([360, ry - 120])
+    .size([360, ry - 200])
     .sort(comparator);
     
 

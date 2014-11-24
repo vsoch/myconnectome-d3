@@ -66,7 +66,7 @@ path.arc {
 }
 
 .node {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -106,8 +106,8 @@ path.arc {
 /* Network div position */
 #network {
   position: fixed:
-  top: 50;
-  left: 25;
+  top: 75px;
+  left: 100px;
 }
 
 /* Here is the control sliders */
@@ -170,8 +170,8 @@ path.arc {
   border-radius: 15px;
   color: #666666;
   z-index: 6;
-  top: 50px;
-  right: 10%;
+  top: 75px;
+  right: 15%;
   
 }
 
