@@ -9,7 +9,7 @@ output_folder = "/home/vanessa/Documents/Dropbox/Website/myconnectome/web/data"
 input_folder = "/home/vanessa/Documents/Dropbox/Website/myconnectome/data"
 data_file = "data_unspaced.txt"
 parcel_file = "parcel_info_unspaced.txt"
-threshold = 0.95
+threshold = 0.99
 
 subfolders = list.files(input_folder,full.names=TRUE)
 source("make_connectome_json.R")

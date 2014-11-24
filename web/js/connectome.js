@@ -1,6 +1,6 @@
 // Here is the size of the canvas, and the radius for the visualization
-var w = 1280,
-    h = 1280,
+var w = 1600,
+    h = 1600,
     rx = w / 2,
     ry = h / 2,
     m0,
@@ -74,50 +74,6 @@ d3.json("data/" + json_data + ".json", function(classes) {
       // Links will have source, target, and value (strength) of correlation
       links = packages.connections(nodes),
       splines = bundle(links);
-
-  // Here we need to count the number in each class to create the donut around
-  donutdata = packages.count(classes);
-
-  donutvalues = []
-  for(var key in donutdata.classes) {
-    donutvalues.push(donutdata.classes[key]);
-  }
-
-  donutkeys = []
-  for(var key in donutdata.classes) {
-    donutkeys.push(key);
-  }
-
-  donutcolors = []
-  for (var key in donutdata.colors) {
-    donutcolors.push(donutdata.colors[key]);
-  }
-
-
-  //TODO: need to get the donut drawn!
-  // Let's draw the donut!
-  var arc = d3.svg.arc()
-    .outerRadius(1500)
-    .innerRadius(1300);
-
-  var pie = d3.layout.pie()
-    .sort(null)
-    
-  svgarc = svg.append("g")
-    //.attr("transform", "translate(740,740)");
-  
-  var g = svgarc.selectAll(".arc")
-      .data(pie(donutvalues))
-      .enter().append("g")
-      .attr("class", "arc");
-      
-      g.append("path")
-       .attr("d", arc)
-       .attr("fill",function(d,i) {return donutcolors[i];})
-        //.on("mouseover.path",function(d) { 
-         //  d3.select("#titleBox")
-          //   .selectAll("h3")
-          //   .text(d.network);});
          
   // This variable could determine if the current svg view should
   // be frozen, which can be done with a click
@@ -140,32 +96,41 @@ d3.json("data/" + json_data + ".json", function(classes) {
           // Here we add a variable, "value" to class of node to distinguish if its positive or negative
           var direction;
           if (d.value > 0) {return "#7AA6FE";}
-          else {return "#FF9C39";}
+          else {return "red";}
         })
-        
+     
+
+  // We want to only print the label for networks when we are seeing
+  // them for the first time.  Other "donut" methods text looks too hideous, so 
+  // I am trying this!
+  var textlabels = []   
 
   svg.selectAll("g.node")
       .data(nodes.filter(function(n) { return !n.children; }))
-      .enter().append("svg:g")
+        .enter().append("svg:g")
         .attr("class", "node")
-        .style("font-size",10)
+        .style("font-size",18)
         .attr("id", function(d) { return "node-" + d.key; })
         .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-        
     .append("svg:text")
       .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
-      .attr("dy", ".31em")
+      .attr("dy", ".8em")
       .attr("fill",function(d) { return d.color; })
       .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
-      .text(function(d) { return d.key; })
+      .text(function(d) { 
+         // Find the last node
+         if (d.makelabel == 0) {return "";}
+         else return d.network;
+       })
+      
+   
+    svg.selectAll("g.node")
+        .append("svg:circle")
+          .attr("r",4)
+          .attr("fill",function(d) {return d.color})   
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
-      // This will freeze and unfreeze the visual if the person clicks
-      //.on("click",function(d) {
-      //   if (freeze == "on") { freeze = "off"; mouseout } 
-      //   else {freeze = "on"; mouseover}
-      //})
 
       // Show image of roi when mouse over node
       .on("mouseover.image",function(node){
@@ -184,7 +149,7 @@ d3.json("data/" + json_data + ".json", function(classes) {
          d3.select("#titleBox")
           .selectAll("h3")
           .text(d.network);})
-      
+     
 
   // Here is slider to adjust the tension   
   d3.select("input[type=range]").on("change", function() {
@@ -272,17 +237,16 @@ function dot(a, b) {
   return a[0] * b[0] + a[1] * b[1];
 }
 
-//SAVE AS SVG Vanessa's terrible function for saving svg graphic
-function saveFunction() {
-    
-  // Create a new window to send svg to
-  var w = window.open();
-  var $container = $('#svg-canvas'),
-        content = $container.html()
-        
-  // Send it!
-  $(w.document.body).html(content);
+//Vanessa's Hacky save svg function!
+function save_svg(evt) {
+    var svg = document.getElementsByTagName("svg");
+    var serializer = new XMLSerializer();
+    var svg_blob = new Blob([serializer.serializeToString(svg[0])],
+                            {'type': "image/svg+xml"});
+    var url = URL.createObjectURL(svg_blob);
+    var svg_win = window.open(url, "svg_win");
 }
+
 
 //Highlight all positive node connections
 document.getElementById('highlight_positive').onchange = function() {

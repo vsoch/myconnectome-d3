@@ -4,6 +4,7 @@
     // Construct the package hierarchy from class names.
     root: function(classes) {
       var map = {};
+      var currentnetwork = [];
 
       function find(name, data) {
         var node = map[name], i;
@@ -17,6 +18,13 @@
             // because node.x and node.y get overwritten with the x,y svg coordinates
             node.xcoord = node.x;
             node.ycoord = node.y;
+            // We also are going to make an indicator variable if we should show the label            
+            if (currentnetwork == node.network){
+              node.makelabel = 0;
+            } else {
+              node.makelabel = 1;
+              currentnetwork = node.network;
+            }
           }
         }
         return node;

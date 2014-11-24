@@ -28,7 +28,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">My Connectome</a>
+      <a class="navbar-brand" href="portal.html">My Connectome</a>
     </div>
 
  <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,7 +59,7 @@
           <ul class="dropdown-menu" role="menu">
             <li><a href="?data=tuesday_var">Tuesday</a></li>
             <li><a href="?data=thursday_var">Thursday</a></li>
-            <!--<li><a href="?data=tu_thu">Tuesday+Thursday</a></li>-->
+            <li><a href="?data=tu_th">Tuesday+Thursday</a></li>
           </ul>
         </li>
 
@@ -121,12 +121,19 @@
 
 <!--Controls, saving, etc-->
 <div id="controlBox">
-  <div class="checkbox">
-    <input type="checkbox" class="btn btn-success" id="highlight_positive">Highlight +</input><br>
-    <input type="checkbox" class="btn btn-success" id="highlight_negative">Highlight -</input>
-  </div>  
-   <button class="btn btn-success" id="save_as_svg" value="" onclick="saveFunction()">Save as SVG</button>  
+
+<form role="form">
+  <div class="form-group">
+     <input type="checkbox" class="btn btn-success" id="highlight_positive"> Highlight Positive<br>
+  </div>
+  <div class="form-group">
+    <input type="checkbox" class="btn btn-success" id="highlight_negative"> Highlight Negative<br>     
+  </div>
+  <button class="btn btn-success" id="save_as_svg" value="" onclick="save_svg()">Save as SVG</button>
+</form>
+
 </div>
+
 <!--Here is image box-->
 <div id="imageBox">
   <img src="img/dummy.png" width="100px" />
